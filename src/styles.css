@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "./node_modules/ol/ol.css";
+
+select:user-invalid,
+input:user-invalid,
+textarea:user-invalid {
+  border: 1px solid red;
+}
+
+input[name="rating"]:is(:checked, :hover) ~ label {
+  @apply text-yellow-400;
+}
+
+

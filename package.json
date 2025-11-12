@@ -5,9 +5,9 @@
     "type": "module",
     "scripts": {
         "prestart": "npm run format && npm run test",
-        "start": "vite",
+        "start": "npm run prestart && vite",
         "build": "tsc && vite build",
-        "test": "eslint src/**",
+        "test": "eslint src/** --fix",
         "format": "prettier --write --cache --parser typescript \"src/**/*.ts\"",
         "preview": "vite preview"
     },
@@ -20,5 +20,10 @@
         "typescript": "~5.9.3",
         "typescript-eslint": "^8.46.2",
         "vite": "^7.1.7"
+    },
+    "dependencies": {
+        "@tailwindcss/vite": "^4.1.17",
+        "ol": "^10.7.0",
+        "tailwindcss": "^4.1.17"
     }
 }

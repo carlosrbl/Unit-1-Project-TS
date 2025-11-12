@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InmoSanvi - Mi Perfil</title>
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/profile.ts" type="module"></script>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <header class="bg-white shadow fixed h-16 flex items-center w-full z-10">
+    <div class="container mx-auto px-4 flex gap-4 justify-between items-center">
+      <div class="flex items-baseline gap-3">
+        <h1 class="text-3xl font-bold text-gray-800">InmoSanvi</h1>
+        <p class="text-gray-600 hidden lg:block">Find your dream home</p>
+      </div>
+      <nav class="flex gap-3">
+        <a class="text-gray-600 hover:text-gray-900" href="index.html">Home</a>
+        <a class="text-gray-600 hover:text-gray-900" href="new-property.html">New Property</a>
+        <a class="font-semibold text-gray-600 hover:text-gray-900" href="profile.html" title="login">
+          <svg class="icon" width="24" height="24">
+            <use href="icons/profile.svg#profile"></use>
+          </svg>
+        </a>
+        <button class="text-gray-600 hover:text-gray-900 cursor-pointer" href="profile.html" title="logout" id="logout-link">
+          <svg class="icon" width="24" height="24">
+            <use href="icons/logout.svg#logout"></use>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8 mt-16 flex-grow flex items-center justify-center">
+    <div class="w-full max-w-2xl">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">User Profile</h2>
+      
+      <div class="bg-white p-8 rounded-lg shadow-md">
+
+        <div id="profile-view">
+          <div class="text-center">
+            <input type="file" id="avatar-upload" name="avatar-upload" class="hidden" accept="image/*">
+            <label for="avatar-upload" class="cursor-pointer group relative inline-block">
+              <img id="avatar-image" src="" alt="Avatar del usuario" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 border-4 border-gray-200 transition-colors">
+              <div id="avatar-image-overlay" class="absolute inset-0 bg-black bg-opacity-50 rounded-full h-32 flex items-center justify-center opacity-0 group-hover:opacity-70 border-4 border-blue-800 transition-opacity border-red">
+                <span class="text-white text-sm font-bold">Change</span>
+              </div>
+            </label>
+            <h3 class="text-2xl font-bold text-gray-800" id="user-name">Juan Pérez</h3>
+            <p class="text-gray-500" id="user-email">juan.perez@inmosanvi.com</p>
+          </div>
+
+          <div class="mt-8 border-t border-gray-200 pt-6 flex flex-col sm:flex-row gap-4" id="edit-buttons">
+            <button id="edit-profile-btn" type="button" class="w-full bg-blue-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 cursor-pointer">Edit profile</button>
+            <button id="change-password-btn" type="button" class="w-full bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-cyan-600 cursor-pointer">Change Password</button>
+          </div>
+        </div>
+
+        <form id="edit-profile-form" class="pt-4 hidden">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">Edit Profile</h3>
+          <div class="space-y-6">
+            <div>
+              <label for="name" class="block text-gray-700 font-bold mb-2">Full name</label>
+              <input type="text" id="name" name="nameUser" value="Juan Pérez" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+              <input type="email" id="email" name="email" value="juan.perez@inmosanvi.com" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+          </div>
+          <div class="mt-8 flex gap-4">
+            <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600">Save Changes</button>
+            <button id="cancel-edit-profile" type="button" class="w-full bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancel</button>
+          </div>
+        </form>
+
+        <form id="change-password-form" class="pt-4 hidden">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">Change Password</h3>
+          <div class="space-y-6">
+            <div>
+              <label for="new-password" class="block text-gray-700 font-bold mb-2">New Password</label>
+              <input type="password" id="new-password" name="password" required minlength="4" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label for="confirm-new-password" class="block text-gray-700 font-bold mb-2">Repeat Password</label>
+              <input type="password" id="confirm-new-password" name="passwordConfirm" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+          </div>
+          <div class="mt-8 flex gap-4">
+            <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600">Save Changes</button>
+            <button id="cancel-change-password" type="button" class="w-full bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="" id="my-properties-link" class="inline-block w-full sm:w-auto bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+          Properties sold by this user
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white mt-12">
+    <div class="container mx-auto px-4 py-6 text-center text-gray-600">
+      <p>&copy; 2025 InmoSanvi. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

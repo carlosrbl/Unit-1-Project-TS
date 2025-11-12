@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InmoSanvi</title>
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/new-property.ts" type="module"></script>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <header class="bg-white shadow fixed h-16 flex items-center w-full z-10">
+    <div class="container mx-auto px-4 flex gap-4 justify-between items-center">
+      <div class="flex items-baseline gap-3">
+        <h1 class="text-3xl font-bold text-gray-800">InmoSanvi</h1>
+        <p class="text-gray-600 hidden lg:block">Find your dream home</p>
+      </div>
+      <nav class="flex gap-3">
+        <a class="text-gray-600 hover:text-gray-900" href="index.html">Home</a>
+        <a class="font-semibold text-gray-600 hover:text-gray-900" href="new-property.html">New Property</a>
+        <a class="text-gray-600 hover:text-gray-900" href="profile.html" title="login">
+          <svg class="icon" width="24" height="24">
+            <use href="icons/profile.svg#profile"></use>
+          </svg>
+        </a>
+        <button class="text-gray-600 hover:text-gray-900 cursor-pointer" href="profile.html" title="logout" id="logout-link">
+          <svg class="icon" width="24" height="24">
+            <use href="icons/logout.svg#logout"></use>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8 mt-16 flex-grow">
+    <section id="add-property" class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Add New Property</h2>
+      <form id="property-form" class="bg-white p-8 rounded-lg shadow-md">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="province" class="block text-gray-700 font-bold mb-2">Province</label>
+            <select id="province" name="province" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+              <option value="">Select a province</option>
+            </select>
+          </div>
+          <div>
+            <label for="town" class="block text-gray-700 font-bold mb-2">Town</label>
+             <select id="town" name="town" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+              <option value="">Select a town</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-6">
+          <label for="address" class="block text-gray-700 font-bold mb-2">Address</label>
+          <input type="text" id="address" name="address" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mt-6">
+          <label for="title" class="text-gray-700 font-bold mb-2">Listing Title</label>
+          <button type="button" id="generate-button" class="text-slate-500 border border-slate-500 shadow-md font-bold py-1 px-2 rounded-lg hover:text-slate-600 ms-2 mb-2 cursor-pointer">
+            Generate
+            <svg class="inline" width="24" height="24">
+              <use href="icons/build.svg#build"></use>
+            </svg>
+          </button>
+          <input type="text" id="title" name="title" required minlength="5" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mt-6">
+          <label for="description" class="text-gray-700 font-bold mb-2">Description</label>
+          <button type="button" id="translate-button" class="text-slate-500 border border-slate-500 shadow-md font-bold py-1 px-2 rounded-lg hover:text-slate-600 ms-2 mb-2 cursor-pointer">Translate 🇬🇧</button>
+          <textarea type="text" id="description" name="description" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <div>
+            <label for="sqmeters" class="block text-gray-700 font-bold mb-2">Square Meters</label>
+            <input type="number" id="sqmeters" name="sqmeters" min="1" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label for="numRooms" class="block text-gray-700 font-bold mb-2">Number of Rooms</label>
+            <input type="number" id="numRooms" name="numRooms" min="1" max="20" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label for="numBaths" class="block text-gray-700 font-bold mb-2">Number of Baths</label>
+            <input type="number" id="numBaths" name="numBaths" min="1" max="20" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div>
+            <label for="price" class="block text-gray-700 font-bold mb-2">Price (€)</label>
+            <input type="number" id="price" name="price" min="1" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div id="map" class="mt-4 w-full h-48 object-cover rounded-lg">
+            </div>
+          </div>
+          <div>
+            <label for="mainPhoto" class="block text-gray-700 font-bold mb-2">Main Photo</label>
+            <input type="file" id="mainPhoto" name="mainPhoto" accept="image/*" required class="w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            <!-- Contenedor para la previsualización de la imagen -->
+            <div class="mt-4">
+              <img id="image-preview" src="" alt="Image preview" class="w-full h-48 object-cover rounded-lg hidden">
+            </div>
+          </div>
+        </div>
+        <div class="mt-8">
+          <button type="submit" class="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            Add Property
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="bg-white mt-12">
+    <div class="container mx-auto px-4 py-6 text-center text-gray-600">
+      <p>&copy; 2025 InmoSanvi. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
