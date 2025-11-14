@@ -18,4 +18,6 @@ export interface SinglePropertyResponse {
   properties: Property;
 }
 
-// export interface TokenResponse {}
+export interface TokenResponse {
+  accessToken: string;
+}

@@ -1,16 +1,10 @@
+import type { PropertyInsert } from "./propertyInsert.interfaces.ts";
 import type { Town } from "./towns.interfaces.ts";
 
-export interface Property {
+export interface Property
+  extends PropertyInsert,
+    Omit<PropertyInsert, "townId"> {
   id: number;
-  address: string;
-  title: string;
-  description: string;
-  sqmeters: number;
-  numRooms: number;
-  numBaths: number;
-  price: number;
-  totalRating: number;
-  mainPhoto: string;
   createdAt: string;
   status: string;
   town: Town;

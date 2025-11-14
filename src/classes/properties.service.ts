@@ -13,13 +13,10 @@ export class PropertiesService {
     );
     return resp.properties;
   }
-  async insertProperty(propertie: Property): Promise<Property> {
-    const body: PropertyInsert = {
-      property: propertie,
-    };
+  async insertProperty(property: PropertyInsert): Promise<Property> {
     const resp = await this.#http.post<Property, PropertyInsert>(
       `${SERVER}/properties`,
-      body
+      property
     );
     return resp;
   }

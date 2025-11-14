@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "prestart": "npm run format && npm run test",
-        "start": "npm run prestart && vite",
+        "start": "vite",
         "build": "tsc && vite build",
         "test": "eslint src/** --fix",
         "format": "prettier --write --cache --parser typescript \"src/**/*.ts\"",
