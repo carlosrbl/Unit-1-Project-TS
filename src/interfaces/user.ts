@@ -12,3 +12,16 @@ export interface Register extends Login {
   name: string;
   avatar: string;
 }
+
+export interface UserProfile {
+  name: string;
+  email: string;
+}
+
+export interface UserAvatar {
+  avatar: string;
+}
+
+export interface UserPassword {
+  password: string;
+}
