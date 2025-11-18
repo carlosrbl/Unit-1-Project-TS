@@ -1,4 +1,4 @@
-import type { Province } from "./provinces.interfaces.ts";
+import type { Province } from "./province.ts";
 
 export interface Town {
   id: number;

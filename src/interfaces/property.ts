@@ -1,3 +1,5 @@
+import type { Town } from "./town.ts";
+
 export interface PropertyInsert {
   address: string;
   title: string;
@@ -9,4 +11,14 @@ export interface PropertyInsert {
   totalRating: number;
   mainPhoto: string;
   townId: number;
+}
+
+export interface Property
+  extends PropertyInsert,
+    Omit<PropertyInsert, "townId"> {
+  id: number;
+  createdAt: string;
+  status: string;
+  town: Town;
+  seller: number;
 }

@@ -1,13 +1,15 @@
 import { PropertiesService } from "./classes/properties.service.ts";
 import { ProvincesService } from "./classes/provinces.service.ts";
-import type { Property } from "./interfaces/property.interfaces.ts";
+import type { Property } from "./interfaces/property.ts";
 
 const propertiesClass = new PropertiesService();
 const template = document.getElementById(
   "property-card-template"
 ) as HTMLTemplateElement | null;
 const provincesClass = new ProvincesService();
-const selectProvince = document.getElementById("province-filter") as HTMLSelectElement;
+const selectProvince = document.getElementById(
+  "province-filter"
+) as HTMLSelectElement;
 
 if (!template) {
   throw new Error("Template not found");
@@ -25,7 +27,7 @@ try {
   console.error("Error al cargar las propiedades:", error);
 }
 
-async function getProvinces(): Promise<void>{
+async function getProvinces(): Promise<void> {
   try {
     const provinces = await provincesClass.getProvinces();
 

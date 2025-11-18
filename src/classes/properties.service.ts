@@ -1,7 +1,7 @@
 import { Http } from "./http.class.ts";
 import { SERVER } from "../constants.ts";
-import type { Property } from "../interfaces/property.interfaces.ts";
-import type { PropertyInsert } from "../interfaces/propertyInsert.interfaces.ts";
+import type { Property } from "../interfaces/property.ts";
+import type { PropertyInsert } from "../interfaces/property.ts";
 import type { PropertiesResponse } from "../interfaces/responses.ts";
 
 export class PropertiesService {

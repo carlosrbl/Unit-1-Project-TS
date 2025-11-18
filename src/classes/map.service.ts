@@ -4,7 +4,7 @@ import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
 import { Geometry, Point } from "ol/geom";
 import { useGeographic } from "ol/proj";
-import type { Coordinates } from "../interfaces/coordinates.interfaces.ts";
+import type { Coordinates } from "../interfaces/coordinates.ts";
 
 export class MapService {
   #map;

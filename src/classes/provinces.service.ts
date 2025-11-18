@@ -1,7 +1,7 @@
 import { Http } from "./http.class.ts";
 import { SERVER } from "../constants.ts";
-import type { Province } from "../interfaces/provinces.interfaces.ts";
-import type { Town } from "../interfaces/towns.interfaces.ts";
+import type { Province } from "../interfaces/province.ts";
+import type { Town } from "../interfaces/town.ts";
 import type {
   ProvincesResponse,
   TownsResponse,

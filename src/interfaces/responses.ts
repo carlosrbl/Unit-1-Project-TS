@@ -1,6 +1,6 @@
-import type { Province } from "./provinces.interfaces.ts";
-import type { Town } from "./towns.interfaces.ts";
-import type { Property } from "./property.interfaces.ts";
+import type { Province } from "./province.ts";
+import type { Town } from "./town.ts";
+import type { Property } from "./property.ts";
 
 export interface ProvincesResponse {
   provinces: Province[];
