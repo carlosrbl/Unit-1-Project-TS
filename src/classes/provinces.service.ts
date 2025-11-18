@@ -14,6 +14,7 @@ export class ProvincesService {
     const resp = await this.#http.get<ProvincesResponse>(`${SERVER}/provinces`);
     return resp.provinces;
   }
+
   async getTowns(id: number): Promise<Town[]> {
     const resp = await this.#http.get<TownsResponse>(
       `${SERVER}/provinces/${id}/towns`

@@ -21,4 +21,5 @@ export interface Property
   status: string;
   town: Town;
   seller: number;
+  mine: boolean;
 }
