@@ -3,6 +3,5 @@ export interface RatingInsert {
 }
 
 export interface Rating {
-    totalRating: number;
+  totalRating: number;
 }
-

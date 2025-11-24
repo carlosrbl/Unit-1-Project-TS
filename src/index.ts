@@ -1,8 +1,26 @@
 import { PropertiesService } from "./classes/properties.service.ts";
 import { ProvincesService } from "./classes/provinces.service.ts";
 import type { Property } from "./interfaces/property.ts";
+import { AuthService } from "./classes/auth.service";
 
 const propertiesClass = new PropertiesService();
+const authService = new AuthService();
+
+const logout = document.getElementById("logout-link") as HTMLButtonElement;
+
+async function checkAlreadyLoggedIn() {
+  try {
+    await authService.checkToken();
+  } catch (error) {
+    console.error("El usuario tiene la sesión iniciada", error);
+    if (logout) {
+      logout.classList.remove("hidden");
+    }
+  }
+}
+
+await checkAlreadyLoggedIn();
+
 const template = document.getElementById(
   "property-card-template"
 ) as HTMLTemplateElement | null;

@@ -8,7 +8,6 @@ export interface PropertyInsert {
   numRooms: number;
   numBaths: number;
   price: number;
-  totalRating: number;
   mainPhoto: string;
   townId: number;
 }
@@ -22,4 +21,5 @@ export interface Property
   town: Town;
   seller: number;
   mine: boolean;
+  totalRating: number;
 }

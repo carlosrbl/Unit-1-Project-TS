@@ -35,3 +35,14 @@ export interface RatingsResponse {
 export interface SingleRatingResponse {
   rating: Rating;
 }
+
+export interface LoginResponse {
+  error: string;
+  status?: number;
+}
+
+export interface RegisterResponse {
+  message: string;
+  error: string;
+  statusCode?: number;
+}
