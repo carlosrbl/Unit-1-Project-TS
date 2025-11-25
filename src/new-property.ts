@@ -19,6 +19,7 @@ const selectTown = document.getElementById("town") as HTMLSelectElement;
 const form = document.getElementById("property-form") as HTMLFormElement;
 const imgInput = document.getElementById("mainPhoto") as HTMLInputElement;
 const imgPreview = document.getElementById("image-preview") as HTMLImageElement;
+
 const logoutButton = document.getElementById(
   "logout-link"
 ) as HTMLButtonElement;
@@ -30,27 +31,21 @@ let currentMarkerFeature: Feature | null = null;
 async function init() {
   try {
     await authService.checkToken();
-
-    setupLogout();
+    console.log("El usuario tiene la sesión iniciada");
     await getProvinces();
     await getMyGeolocation();
   } catch (error) {
-    console.error("Error con el inicio:", error);
-    location.assign("login.html");
+    console.error("Error 3 con el checkToken", error);
   }
 }
 
 await init();
 
-function setupLogout() {
-  if (logoutButton) {
-    logoutButton.addEventListener("click", e => {
-      e.preventDefault();
-      authService.logout();
-      location.assign("login.html");
-    });
-  }
-}
+logoutButton.addEventListener("click", e => {
+  e.preventDefault();
+  authService.logout();
+  location.assign("index.html");
+});
 
 function clearSelect(selectElement: HTMLSelectElement): void {
   while (selectElement.options.length > 1) {

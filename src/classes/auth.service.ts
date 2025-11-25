@@ -8,35 +8,20 @@ export class AuthService {
   #http = new Http();
 
   async login(userLogin: Login): Promise<void> {
-    try {
-      const resp = await this.#http.post<TokenResponse, Login>(
-        `${SERVER}/auth/login`,
-        userLogin
-      );
+    const resp = await this.#http.post<TokenResponse, Login>(
+      `${SERVER}/auth/login`,
+      userLogin
+    );
 
-      localStorage.setItem(TOKEN_KEY, resp.accessToken);
-    } catch (error) {
-      console.error(error);
-    }
+    localStorage.setItem(TOKEN_KEY, resp.accessToken);
   }
 
   async register(userInfo: Register): Promise<void> {
-    try {
-      await this.#http.post<void, Register>(
-        `${SERVER}/auth/register`,
-        userInfo
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    await this.#http.post<void, Register>(`${SERVER}/auth/register`, userInfo);
   }
 
   async checkToken(): Promise<void> {
-    try {
-      await this.#http.get<void>(`${SERVER}/auth/validate`);
-    } catch (error) {
-      console.error(error);
-    }
+    await this.#http.get<void>(`${SERVER}/auth/validate`);
   }
 
   logout(): void {

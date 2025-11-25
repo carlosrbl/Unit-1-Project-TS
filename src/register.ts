@@ -21,9 +21,10 @@ const avatarPreview = document.getElementById(
 async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
-  } catch (error) {
-    console.error("El usuario tiene la sesión iniciada", error);
+    console.log("El usuario tiene la sesión iniciada");
     location.assign("index.html");
+  } catch (error) {
+    console.error("Error 4 con el checkToken", error);
   }
 }
 
@@ -93,13 +94,13 @@ if (registerForm) {
       };
 
       await authService.register(newUser);
-
+      
       location.assign("login.html");
     } catch (problema) {
       const error = problema as RegisterResponse;
 
       if (error.error) {
-        alert(`Error: ${error.statusCode}, ${error.message}`);
+        alert(`Error con el registro: ${error.statusCode}, ${error.message}`);
       }
     }
   });

@@ -11,9 +11,10 @@ const passwordInput = document.getElementById("password") as HTMLInputElement;
 async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
-  } catch (error) {
-    console.error("El usuario tiene la sesión iniciada", error);
+    console.log("El usuario tiene la sesión iniciada");
     location.assign("index.html");
+  } catch (error) {
+    console.error("Error 2 con el checkToken", error);
   }
 }
 
@@ -35,7 +36,7 @@ if (loginForm) {
       const error = problema as LoginResponse;
 
       if (error.error) {
-        alert(`Error: ${error.status}, ${error.error}`);
+        alert(`Error con el login: ${error.status}, ${error.error}`);
       }
     }
   });

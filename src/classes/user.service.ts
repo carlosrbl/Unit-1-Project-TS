@@ -19,14 +19,10 @@ export class UserService {
   }
 
   async saveProfile(profileData: UserProfile): Promise<void> {
-    try {
-      await this.#http.put<void, UserProfile>(
-        `${SERVER}/users/me/profile`,
-        profileData
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    await this.#http.put<void, UserProfile>(
+      `${SERVER}/users/me/profile`,
+      profileData
+    );
   }
 
   async saveAvatar(avatar: string): Promise<string> {
@@ -39,13 +35,9 @@ export class UserService {
   }
 
   async savePassword(passwordData: UserPassword): Promise<void> {
-    try {
-      await this.#http.put<void, UserPassword>(
-        `${SERVER}/users/me/password`,
-        passwordData
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    await this.#http.put<void, UserPassword>(
+      `${SERVER}/users/me/password`,
+      passwordData
+    );
   }
 }

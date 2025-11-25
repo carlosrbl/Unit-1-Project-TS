@@ -6,20 +6,32 @@ import { AuthService } from "./classes/auth.service";
 const propertiesClass = new PropertiesService();
 const authService = new AuthService();
 
-const logout = document.getElementById("logout-link") as HTMLButtonElement;
+const logoutButton = document.getElementById(
+  "logout-link"
+) as HTMLButtonElement;
+const loginButton = document.getElementById("login-link") as HTMLButtonElement;
+const newPropertyButton = document.getElementById("new-property-link") as HTMLButtonElement;
 
 async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
+    console.log("El usuario tiene la sesión iniciada");
+    
+    logoutButton.classList.remove("hidden");
+    newPropertyButton.classList.remove("hidden");
+    loginButton.classList.add("hidden");
   } catch (error) {
-    console.error("El usuario tiene la sesión iniciada", error);
-    if (logout) {
-      logout.classList.remove("hidden");
-    }
+    console.error("Error 1 con el checkToken", error);
   }
 }
 
 await checkAlreadyLoggedIn();
+
+logoutButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  authService.logout();
+  location.assign("index.html");
+});
 
 const template = document.getElementById(
   "property-card-template"
