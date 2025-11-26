@@ -22,6 +22,7 @@ async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
     console.log("El usuario tiene la sesión iniciada");
+    alert("El usuario tiene la sesión iniciada");
     location.assign("index.html");
   } catch (error) {
     console.error("Error 4 con el checkToken", error);
@@ -94,7 +95,7 @@ if (registerForm) {
       };
 
       await authService.register(newUser);
-      
+
       location.assign("login.html");
     } catch (problema) {
       const error = problema as RegisterResponse;

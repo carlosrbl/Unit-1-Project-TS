@@ -36,12 +36,14 @@ async function init() {
     await getMyGeolocation();
   } catch (error) {
     console.error("Error 3 con el checkToken", error);
+    alert("El usuario no tiene la sesión iniciada");
+    location.assign("index.html");
   }
 }
 
 await init();
 
-logoutButton.addEventListener("click", e => {
+logoutButton.addEventListener("click", (e: MouseEvent) => {
   e.preventDefault();
   authService.logout();
   location.assign("index.html");

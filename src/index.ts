@@ -10,15 +10,19 @@ const logoutButton = document.getElementById(
   "logout-link"
 ) as HTMLButtonElement;
 const loginButton = document.getElementById("login-link") as HTMLButtonElement;
-const newPropertyButton = document.getElementById("new-property-link") as HTMLButtonElement;
+const profileButton = document.getElementById("profile-link") as HTMLButtonElement;
+const newPropertyButton = document.getElementById(
+  "new-property-link"
+) as HTMLButtonElement;
 
 async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
     console.log("El usuario tiene la sesión iniciada");
-    
+
     logoutButton.classList.remove("hidden");
     newPropertyButton.classList.remove("hidden");
+    profileButton.classList.remove("hidden");
     loginButton.classList.add("hidden");
   } catch (error) {
     console.error("Error 1 con el checkToken", error);
@@ -27,7 +31,7 @@ async function checkAlreadyLoggedIn() {
 
 await checkAlreadyLoggedIn();
 
-logoutButton.addEventListener("click", (e) => {
+logoutButton.addEventListener("click", (e: MouseEvent) => {
   e.preventDefault();
   authService.logout();
   location.assign("index.html");
@@ -129,7 +133,11 @@ async function getProperties(): Promise<void> {
         ".btn-delete"
       ) as HTMLButtonElement;
 
-      if (borrarPropiedad) {
+      if (!p.mine) {
+        borrarPropiedad.classList.add("hidden");
+      }
+      
+      if (borrarPropiedad && p.mine) {
         borrarPropiedad.addEventListener("click", (event: MouseEvent) => {
           event.preventDefault();
 
