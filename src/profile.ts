@@ -187,23 +187,22 @@ formEditProfile.addEventListener("submit", async (e: SubmitEvent) => {
 
     alert("Perfil actualizado correctamente");
     hideForms();
-  }
-  catch (error) {
-    console.error("Error actualizando datos",error);
+  } catch (error) {
+    console.error("Error actualizando datos", error);
     alert("Error al actualizar el perfil");
   }
 });
 
 formChangePassword.addEventListener("submit", async (e: SubmitEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (newPasswordInput.value !== confirmPasswordInput.value) {
+  if (newPasswordInput.value !== confirmPasswordInput.value) {
     alert("Las contraseñas no coinciden");
     return;
   }
 
   const passwordData: UserPassword = {
-    password: newPasswordInput.value
+    password: newPasswordInput.value,
   };
 
   try {
@@ -211,8 +210,7 @@ formChangePassword.addEventListener("submit", async (e: SubmitEvent) => {
 
     alert("Contraseña modificada correctamente");
     hideForms();
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error al actualizar contraseña", error);
     alert("Error al cambiar la contraseña");
   }

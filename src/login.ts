@@ -1,6 +1,7 @@
 import { AuthService } from "./classes/auth.service";
 import type { Login } from "./interfaces/user";
 import type { LoginResponse } from "./interfaces/responses";
+import Swal from "sweetalert2";
 
 const authService = new AuthService();
 
@@ -12,7 +13,11 @@ async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
     console.log("El usuario tiene la sesión iniciada");
-    alert("El usuario tiene la sesión iniciada");
+    await Swal.fire({
+      icon: "info",
+      title: "Info de Sesión",
+      text: "El usuario tiene la sesión iniciada",
+    });
     location.assign("index.html");
   } catch (error) {
     console.error("Error 2 con el checkToken", error);
@@ -32,13 +37,20 @@ if (loginForm) {
 
     try {
       await authService.login(loginData);
+      await Swal.fire({
+        icon: "success",
+        title: "Info de Sesión",
+        text: "Acabas de iniciar sesión",
+      });
       location.assign("index.html");
     } catch (problema) {
       const error = problema as LoginResponse;
-
-      if (error.error) {
-        alert(`Error con el login: ${error.status}, ${error.error}`);
-      }
+      await Swal.fire({
+        icon: "error",
+        title: "Info de Sesión",
+        text: "Usuario o contraseña incorrectos",
+      });
+      console.error(error.error);
     }
   });
 }

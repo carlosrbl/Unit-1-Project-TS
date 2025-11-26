@@ -10,7 +10,9 @@ const logoutButton = document.getElementById(
   "logout-link"
 ) as HTMLButtonElement;
 const loginButton = document.getElementById("login-link") as HTMLButtonElement;
-const profileButton = document.getElementById("profile-link") as HTMLButtonElement;
+const profileButton = document.getElementById(
+  "profile-link"
+) as HTMLButtonElement;
 const newPropertyButton = document.getElementById(
   "new-property-link"
 ) as HTMLButtonElement;
@@ -136,7 +138,7 @@ async function getProperties(): Promise<void> {
       if (!p.mine) {
         borrarPropiedad.classList.add("hidden");
       }
-      
+
       if (borrarPropiedad && p.mine) {
         borrarPropiedad.addEventListener("click", (event: MouseEvent) => {
           event.preventDefault();
