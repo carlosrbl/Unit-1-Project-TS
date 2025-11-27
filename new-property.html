@@ -67,7 +67,12 @@
         </div>
         <div class="mt-6">
           <label for="description" class="text-gray-700 font-bold mb-2">Description</label>
-          <button type="button" id="translate-button" class="text-slate-500 border border-slate-500 shadow-md font-bold py-1 px-2 rounded-lg hover:text-slate-600 ms-2 mb-2 cursor-pointer">Translate 🇬🇧</button>
+          <button type="button" id="translate-button" class="text-slate-500 border border-slate-500 shadow-md font-bold py-1 px-2 rounded-lg hover:text-slate-600 ms-2 mb-2 cursor-pointer">
+            Translate
+            <svg class="inline" width="24" height="24">
+              <use width="24" height="24" href="icons/ai.svg#ai"></use>
+            </svg>
+          </button>
           <textarea type="text" id="description" name="description" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
