@@ -5,10 +5,8 @@ export interface RatingInsert {
   comment: string;
 }
 
-export interface Rating {
+export interface Rating extends RatingInsert {
   id: number;
-  rating: number;
-  comment: string;
   property: number;
   user: User;
 }

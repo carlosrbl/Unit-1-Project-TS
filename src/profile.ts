@@ -112,7 +112,7 @@ async function loadProfile(id?: number) {
 function renderProfile(user: User) {
   userName.textContent = user.name;
   userEmail.textContent = user.email;
-  avatarImage.src = user.avatar || "img/default-avatar.png";
+  avatarImage.src = user.avatar;
 
   nameInput.value = user.name;
   emailInput.value = user.email;

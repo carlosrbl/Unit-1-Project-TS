@@ -12,6 +12,13 @@ export interface PropertyInsert {
   townId: number;
 }
 
+export interface Seller {
+  id: number;
+  name: string;
+  email: string;
+  avatar: string;
+}
+
 export interface Property
   extends PropertyInsert,
     Omit<PropertyInsert, "townId"> {
@@ -19,7 +26,8 @@ export interface Property
   createdAt: string;
   status: string;
   town: Town;
-  seller: number;
-  mine: boolean;
+  seller: Seller;
+  mine?: boolean;
   totalRating: number;
+  rated?: boolean;
 }

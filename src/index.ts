@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const propertiesClass = new PropertiesService();
 const authService = new AuthService();
+const provincesClass = new ProvincesService();
 
 const logoutButton = document.getElementById(
   "logout-link"
@@ -48,7 +49,6 @@ logoutButton.addEventListener("click", async (e: MouseEvent) => {
 const template = document.getElementById(
   "property-card-template"
 ) as HTMLTemplateElement | null;
-const provincesClass = new ProvincesService();
 const selectProvince = document.getElementById(
   "province-filter"
 ) as HTMLSelectElement;
@@ -63,8 +63,10 @@ try {
   console.error("Error al cargar las provincias:", error);
 }
 
+const params = new URLSearchParams(location.search);
+
 try {
-  await getProperties();
+  await getProperties(params);
 } catch (error) {
   console.error("Error al cargar las propiedades:", error);
 }
@@ -84,45 +86,56 @@ async function getProvinces(): Promise<void> {
   }
 }
 
-async function getProperties(): Promise<void> {
+async function getProperties(queryParams: URLSearchParams): Promise<void> {
   try {
-    const properties: Property[] = await propertiesClass.getProperties();
+    const properties: Property[] =
+      await propertiesClass.getProperties(queryParams);
 
     properties.forEach(p => {
       const userHTML = template!.content.cloneNode(true) as DocumentFragment;
+      const detailUrl = `property-detail.html?id=${p.id}`;
 
       const imageElement = userHTML.querySelector(
         ".property-image"
       ) as HTMLImageElement;
       const titleElement = userHTML.querySelector(
         ".property-title"
-      ) as HTMLSelectElement;
+      ) as HTMLAnchorElement;
       const locationElement = userHTML.querySelector(
         ".property-location"
-      ) as HTMLSelectElement;
+      ) as HTMLElement;
       const descriptionElement = userHTML.querySelector(
         ".property-description"
-      ) as HTMLSelectElement;
+      ) as HTMLElement;
       const priceElement = userHTML.querySelector(
         ".property-price"
-      ) as HTMLSelectElement;
+      ) as HTMLElement;
       const sqmetersElement = userHTML.querySelector(
         ".property-sqmeters"
-      ) as HTMLSelectElement;
+      ) as HTMLElement;
       const roomsElement = userHTML.querySelector(
         ".property-rooms"
-      ) as HTMLSelectElement;
+      ) as HTMLElement;
       const bathsElement = userHTML.querySelector(
         ".property-baths"
-      ) as HTMLSelectElement;
+      ) as HTMLElement;
 
       const provinceName =
         typeof p.town.province === "object" && p.town.province !== null
           ? p.town.province.name
           : "Desconocido";
 
-      if (imageElement) imageElement.src = p.mainPhoto;
-      if (titleElement) titleElement.textContent = p.title;
+      if (imageElement) {
+        imageElement.src = p.mainPhoto;
+        const imageParentLink = imageElement.parentElement as HTMLAnchorElement;
+        if (imageParentLink) {
+          imageParentLink.href = detailUrl;
+        }
+      }
+      if (titleElement) {
+        titleElement.textContent = p.title;
+        titleElement.href = detailUrl;
+      }
       if (locationElement)
         locationElement.textContent = `${p.address}, ${p.town.name}, ${provinceName}`;
       if (descriptionElement) descriptionElement.textContent = p.description;
