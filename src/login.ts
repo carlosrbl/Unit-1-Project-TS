@@ -37,11 +37,13 @@ if (loginForm) {
 
     try {
       await authService.login(loginData);
+
       await Swal.fire({
         icon: "success",
         title: "Info de Sesión",
         text: "Acabas de iniciar sesión",
       });
+
       location.assign("index.html");
     } catch (problema) {
       const error = problema as LoginResponse;

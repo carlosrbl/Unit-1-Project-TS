@@ -6,6 +6,7 @@ import type {
   UserProfile,
   UserAvatar,
 } from "./interfaces/user";
+import Swal from "sweetalert2";
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -59,12 +60,16 @@ const confirmPasswordInput = document.getElementById(
   "confirm-new-password"
 ) as HTMLInputElement;
 
-logoutButton.addEventListener("click", (e: MouseEvent) => {
+logoutButton.addEventListener("click", async (e: MouseEvent) => {
   e.preventDefault();
   authService.logout();
+  await Swal.fire({
+    icon: "success",
+    title: "Info de Sesión",
+    text: "Has cerrado la sesión",
+  });
   location.assign("index.html");
 });
-
 let currentUser: User | null = null;
 
 async function init() {
@@ -78,7 +83,11 @@ async function init() {
     await loadProfile(userId ? Number(userId) : undefined);
   } catch (error) {
     console.error("Error 5 con el checkToken", error);
-    alert("El usuario no tiene la sesión iniciada");
+    await Swal.fire({
+      icon: "warning",
+      title: "Info de Sesión",
+      text: "Debes iniciar sesión para acceder a este apartado",
+    });
     location.assign("index.html");
   }
 }
@@ -91,7 +100,11 @@ async function loadProfile(id?: number) {
     renderProfile(currentUser);
   } catch (error) {
     console.error("Error cargando perfil:", error);
-    alert("No se pudo cargar el perfil del usuario");
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "Error cargando el perfil del usuario",
+    });
     location.assign("index.html");
   }
 }
@@ -164,10 +177,19 @@ avatarInput.addEventListener("change", async () => {
       avatar: base64.split(",")[1],
     };
     const newAvatarUrl = await userService.saveAvatar(avatarData.avatar);
+    await Swal.fire({
+      icon: "success",
+      title: "Info de Sesión",
+      text: "Avatar actualizado",
+    });
     avatarImage.src = newAvatarUrl || base64;
   } catch (error) {
     console.error("Error actualizando avatar", error);
-    alert("Error al actualizar la imagen de perfil");
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "Error actualizando el avatar",
+    });
   }
 });
 
@@ -185,11 +207,19 @@ formEditProfile.addEventListener("submit", async (e: SubmitEvent) => {
     userName.textContent = updatedProfile.name;
     userEmail.textContent = updatedProfile.email;
 
-    alert("Perfil actualizado correctamente");
+    await Swal.fire({
+      icon: "success",
+      title: "Info de Sesión",
+      text: "Se ha actualizado de forma correcta el perfil",
+    });
     hideForms();
   } catch (error) {
     console.error("Error actualizando datos", error);
-    alert("Error al actualizar el perfil");
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "Error actualizando los datos",
+    });
   }
 });
 
@@ -197,7 +227,11 @@ formChangePassword.addEventListener("submit", async (e: SubmitEvent) => {
   e.preventDefault();
 
   if (newPasswordInput.value !== confirmPasswordInput.value) {
-    alert("Las contraseñas no coinciden");
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "Las contraseñas no coinciden",
+    });
     return;
   }
 
@@ -208,10 +242,18 @@ formChangePassword.addEventListener("submit", async (e: SubmitEvent) => {
   try {
     await userService.savePassword(passwordData);
 
-    alert("Contraseña modificada correctamente");
+    await Swal.fire({
+      icon: "success",
+      title: "Info de Sesión",
+      text: "Contraseña modificada correctamente",
+    });
     hideForms();
   } catch (error) {
     console.error("Error al actualizar contraseña", error);
-    alert("Error al cambiar la contraseña");
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "Error al cambiar la contraseña",
+    });
   }
 });

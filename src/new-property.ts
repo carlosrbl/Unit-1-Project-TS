@@ -9,6 +9,7 @@ import type { Town } from "./interfaces/town.ts";
 import type { Coordinates } from "./interfaces/coordinates.ts";
 import Feature from "ol/Feature";
 import { Point } from "ol/geom";
+import Swal from "sweetalert2";
 
 const provincesService = new ProvincesService();
 const propertiesService = new PropertiesService();
@@ -36,16 +37,25 @@ async function init() {
     await getMyGeolocation();
   } catch (error) {
     console.error("Error 3 con el checkToken", error);
-    alert("El usuario no tiene la sesión iniciada");
+    await Swal.fire({
+      icon: "warning",
+      title: "Info de Sesión",
+      text: "Debes iniciar sesión para acceder a este apartado",
+    });
     location.assign("index.html");
   }
 }
 
 await init();
 
-logoutButton.addEventListener("click", (e: MouseEvent) => {
+logoutButton.addEventListener("click", async (e: MouseEvent) => {
   e.preventDefault();
   authService.logout();
+  await Swal.fire({
+    icon: "success",
+    title: "Info de Sesión",
+    text: "Has cerrado la sesión",
+  });
   location.assign("index.html");
 });
 
@@ -200,9 +210,18 @@ form.addEventListener("submit", async (e: SubmitEvent) => {
     };
 
     await propertiesService.insertProperty(propiedad);
+    await Swal.fire({
+      icon: "success",
+      title: "Info de Sesión",
+      text: "Se ha creado la propiedad correctamente",
+    });
     location.assign("index.html");
   } catch (error) {
     console.error("Error añadiendo propiedad:", error);
-    alert("Error añadiendo propiedad");
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "No se puede crear la propiedad",
+    });
   }
 });

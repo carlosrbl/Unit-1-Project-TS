@@ -20,7 +20,7 @@ export class UserService {
 
   async saveProfile(profileData: UserProfile): Promise<void> {
     await this.#http.put<void, UserProfile>(
-      `${SERVER}/users/me/profile`,
+      `${SERVER}/users/me`,
       profileData
     );
   }

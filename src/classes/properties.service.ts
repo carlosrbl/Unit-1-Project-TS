@@ -5,7 +5,6 @@ import type {
   PropertiesResponse,
   SinglePropertyResponse,
   RatingsResponse,
-  SingleRatingResponse,
 } from "../interfaces/responses.ts";
 import type { Rating, RatingInsert } from "../interfaces/rating.ts";
 
@@ -34,29 +33,26 @@ export class PropertiesService {
     return resp;
   }
 
-  deleteProperty(id: number): Promise<void> {
+  async deleteProperty(id: number): Promise<void> {
     return this.#http.delete(`${SERVER}/properties/${id}`);
   }
 
   async addRating(id: number, rating: RatingInsert): Promise<Rating> {
-    const resp = await this.#http.put<Rating, RatingInsert>(
-      `${SERVER}/properties/${id}`,
+    const resp = await this.#http.post<Rating, RatingInsert>(
+      `${SERVER}/properties/${id}/ratings`,
       rating
     );
     return resp;
   }
 
-  async getRatings(): Promise<Rating[]> {
+  async getRatings(id: number): Promise<Rating[]> {
     const resp = await this.#http.get<RatingsResponse>(
-      `${SERVER}/properties/ratings`
+      `${SERVER}/properties/${id}/ratings`
     );
     return resp.ratings;
   }
 
-  async getRatingsById(id: number): Promise<Rating> {
-    const resp = await this.#http.get<SingleRatingResponse>(
-      `${SERVER}/properties/ratings/${id}`
-    );
-    return resp.rating;
-  }
+  async deleteRating(id: number, user: number): Promise<void> {
+    return this.#http.delete(`${SERVER}/properties/${id}/ratings/${user}`);
+  };
 }

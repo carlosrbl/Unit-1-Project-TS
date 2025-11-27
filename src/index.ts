@@ -2,6 +2,7 @@ import { PropertiesService } from "./classes/properties.service.ts";
 import { ProvincesService } from "./classes/provinces.service.ts";
 import type { Property } from "./interfaces/property.ts";
 import { AuthService } from "./classes/auth.service";
+import Swal from "sweetalert2";
 
 const propertiesClass = new PropertiesService();
 const authService = new AuthService();
@@ -33,9 +34,14 @@ async function checkAlreadyLoggedIn() {
 
 await checkAlreadyLoggedIn();
 
-logoutButton.addEventListener("click", (e: MouseEvent) => {
+logoutButton.addEventListener("click", async (e: MouseEvent) => {
   e.preventDefault();
   authService.logout();
+  await Swal.fire({
+    icon: "success",
+    title: "Info de Sesión",
+    text: "Has cerrado la sesión",
+  });
   location.assign("index.html");
 });
 
@@ -140,15 +146,38 @@ async function getProperties(): Promise<void> {
       }
 
       if (borrarPropiedad && p.mine) {
-        borrarPropiedad.addEventListener("click", (event: MouseEvent) => {
+        borrarPropiedad.addEventListener("click", async (event: MouseEvent) => {
           event.preventDefault();
 
-          if (
-            confirm("¿Estás seguro de que quieres eliminar esta propiedad?")
-          ) {
-            const idPropertie = p.id;
-            void propertiesClass.deleteProperty(idPropertie);
-            borrarPropiedad.closest(".bg-white")?.remove();
+          const result = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+          });
+          if (result.isConfirmed) {
+            try {
+              const idPropertie = p.id;
+              await propertiesClass.deleteProperty(idPropertie);
+              borrarPropiedad.closest(".bg-white")?.remove();
+
+              await Swal.fire({
+                icon: "success",
+                title: "Info de Sesión",
+                text: "La propiedad ha sido eliminada correctamente",
+              });
+            } catch (error) {
+              console.error(error);
+              await Swal.fire({
+                icon: "error",
+                title: "Info de Sesión",
+                text: "No se pudo eliminar la propiedad",
+              });
+            }
           }
         });
       }

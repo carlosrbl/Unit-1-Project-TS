@@ -1,6 +1,7 @@
 import { AuthService } from "./classes/auth.service";
 import type { Register } from "./interfaces/user";
 import type { RegisterResponse } from "./interfaces/responses";
+import Swal from "sweetalert2";
 
 const authService = new AuthService();
 
@@ -22,7 +23,11 @@ async function checkAlreadyLoggedIn() {
   try {
     await authService.checkToken();
     console.log("El usuario tiene la sesión iniciada");
-    alert("El usuario tiene la sesión iniciada");
+    await Swal.fire({
+      icon: "info",
+      title: "Info de Sesión",
+      text: "El usuario tiene la sesión iniciada",
+    });
     location.assign("index.html");
   } catch (error) {
     console.error("Error 4 con el checkToken", error);
@@ -96,13 +101,21 @@ if (registerForm) {
 
       await authService.register(newUser);
 
+      await Swal.fire({
+        icon: "success",
+        title: "Info de Sesión",
+        text: "Acabas de ser registrado",
+      });
+
       location.assign("login.html");
     } catch (problema) {
       const error = problema as RegisterResponse;
-
-      if (error.error) {
-        alert(`Error con el registro: ${error.statusCode}, ${error.message}`);
-      }
+      await Swal.fire({
+        icon: "error",
+        title: "Info de Sesión",
+        text: `${error.message}`,
+      });
+      console.error(error.error);
     }
   });
 }

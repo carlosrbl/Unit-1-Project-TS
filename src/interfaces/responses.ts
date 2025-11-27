@@ -32,10 +32,6 @@ export interface RatingsResponse {
   ratings: Rating[];
 }
 
-export interface SingleRatingResponse {
-  rating: Rating;
-}
-
 export interface LoginResponse {
   error: string;
   status?: number;
