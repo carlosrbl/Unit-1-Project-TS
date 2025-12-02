@@ -11,12 +11,12 @@ import type { Rating, RatingInsert } from "../interfaces/rating.ts";
 export class PropertiesService {
   #http = new Http();
 
-  async getProperties(params?: URLSearchParams): Promise<Property[]> {
+  async getProperties(params?: URLSearchParams): Promise<PropertiesResponse> {
     const queryString = params ? `?${params.toString()}` : "";
     const resp = await this.#http.get<PropertiesResponse>(
       `${SERVER}/properties${queryString}`
     );
-    return resp.properties;
+    return resp;
   }
 
   async getPropertyById(id: number): Promise<Property> {
