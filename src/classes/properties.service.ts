@@ -55,5 +55,5 @@ export class PropertiesService {
 
   async deleteRating(id: number, user: number): Promise<void> {
     return this.#http.delete(`${SERVER}/properties/${id}/ratings/${user}`);
-  };
+  }
 }

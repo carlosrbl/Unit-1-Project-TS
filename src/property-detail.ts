@@ -227,9 +227,9 @@ async function loadRatings(propertyId: number) {
 
       img.src = rating.user.avatar;
       img.parentElement!.setAttribute(
-      "href",
-      `profile.html?id=${rating.user.id}`
-    );
+        "href",
+        `profile.html?id=${rating.user.id}`
+      );
       author.textContent = rating.user.name;
       author.href = `profile.html?id=${rating.user.id}`;
       stars.textContent = getStarsString(rating.rating);

@@ -10,6 +10,15 @@ import type { Coordinates } from "./interfaces/coordinates.ts";
 import Feature from "ol/Feature";
 import { Point } from "ol/geom";
 import Swal from "sweetalert2";
+import type {
+  LanguageDetectorFactory,
+  TranslatorFactory,
+  SummarizerFactory,
+} from "./interfaces/ai.ts";
+
+declare const LanguageDetector: LanguageDetectorFactory;
+declare const Translator: TranslatorFactory;
+declare const Summarizer: SummarizerFactory;
 
 const provincesService = new ProvincesService();
 const propertiesService = new PropertiesService();
@@ -20,6 +29,16 @@ const selectTown = document.getElementById("town") as HTMLSelectElement;
 const form = document.getElementById("property-form") as HTMLFormElement;
 const imgInput = document.getElementById("mainPhoto") as HTMLInputElement;
 const imgPreview = document.getElementById("image-preview") as HTMLImageElement;
+const btnGenerate = document.getElementById(
+  "generate-button"
+) as HTMLButtonElement;
+const btnTranslate = document.getElementById(
+  "translate-button"
+) as HTMLButtonElement;
+const inputDescription = document.getElementById(
+  "description"
+) as HTMLTextAreaElement;
+const inputTitle = document.getElementById("title") as HTMLInputElement;
 
 const logoutButton = document.getElementById(
   "logout-link"
@@ -135,6 +154,109 @@ selectTown.addEventListener("change", () => {
     } else {
       currentMarkerFeature = mapaView.createMarker(townCoordenadas);
     }
+  }
+});
+
+async function detectLanguage(text: string): Promise<string> {
+  const detector = await LanguageDetector.create({
+    expectedInputLanguages: ["en", "es", "de", "fr", "it"],
+  });
+
+  const results = await detector.detect(text);
+  return results[0]?.detectedLanguage ?? "en";
+}
+
+async function translate(
+  text: string,
+  inputLang: string,
+  outputLang: string
+): Promise<string> {
+  const translator = await Translator.create({
+    sourceLanguage: inputLang,
+    targetLanguage: outputLang,
+  });
+  return await translator.translate(text);
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+btnTranslate.addEventListener("click", async () => {
+  btnTranslate.disabled = true;
+  inputDescription.disabled = true;
+  const originalText = inputDescription.value;
+
+  try {
+    const text = inputDescription.value;
+
+    if (!text) {
+      await Swal.fire({
+        icon: "warning",
+        title: "Info de Sesión",
+        text: "No puedes utilizar esta función sin una descripción",
+      });
+      return;
+    }
+    inputDescription.value = "Translating...";
+    await delay(1500);
+    const inputLang = await detectLanguage(text);
+    if (inputLang === "en") {
+      await Swal.fire({
+        icon: "warning",
+        title: "Info de Sesión",
+        text: "El texto ya está en inglés",
+      });
+      inputDescription.value = originalText;
+      return;
+    }
+    inputDescription.value = await translate(text, inputLang, "en");
+  } catch (error) {
+    console.error(error);
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "No se puede traducir",
+    });
+  } finally {
+    btnTranslate.disabled = false;
+    inputDescription.disabled = false;
+  }
+});
+
+async function summarize(text: string): Promise<string> {
+  const summarizer = await Summarizer.create({
+    sharedContext:
+      "A general summary to help a user decide if the text is worth reading",
+    type: "tldr",
+    length: "short",
+    format: "plain-text",
+    expectedInputLanguages: ["en", "es"],
+    outputLanguage: "es",
+  });
+
+  return await summarizer.summarize(text);
+}
+
+btnGenerate.addEventListener("click", async () => {
+  btnGenerate.disabled = true;
+  inputTitle.disabled = true;
+
+  try {
+    inputTitle.value = "Generating...";
+    await delay(1500);
+    const text = inputDescription.value;
+    inputTitle.value = await summarize(text);
+  } catch (error) {
+    console.error(error);
+    await Swal.fire({
+      icon: "error",
+      title: "Info de Sesión",
+      text: "No se puede generar un título con la IA",
+    });
+  } finally {
+    btnGenerate.disabled = false;
+    inputTitle.disabled = false;
   }
 });
 

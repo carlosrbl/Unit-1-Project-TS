@@ -19,10 +19,7 @@ export class UserService {
   }
 
   async saveProfile(profileData: UserProfile): Promise<void> {
-    await this.#http.put<void, UserProfile>(
-      `${SERVER}/users/me`,
-      profileData
-    );
+    await this.#http.put<void, UserProfile>(`${SERVER}/users/me`, profileData);
   }
 
   async saveAvatar(avatar: string): Promise<string> {
